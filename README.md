@@ -73,3 +73,4 @@ GitHub のリポジトリ設定から GitHub Pages を有効にすると、ブ�
 ## ライセンス
 
 MIT License
+"# personality-checker" 
