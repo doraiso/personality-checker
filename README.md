@@ -43,22 +43,9 @@ personality-checker/
 
 外部ライブラリは使用していません。
 
-## ローカルでの実行方法
+## URL
 
-このリポジトリをダウンロードまたはクローンし、`index.html` をブラウザで開いてください。
-
-```bash
-git clone https://github.com/your-name/personality-checker.git
-cd personality-checker
-```
-
-その後、`index.html` を開くと利用できます。
-
-## GitHub Pages で公開する場合
-
-GitHub のリポジトリ設定から GitHub Pages を有効にすると、ブラウザ上で公開できます。
-
-リポジトリ直下に `index.html` があるため、そのまま GitHub Pages に対応できます。
+https://doraiso.github.io/personality-checker/
 
 ## プライバシーについて
 
