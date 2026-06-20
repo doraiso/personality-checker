@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5問でわかる性格診断</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <section id="topScreen" class="screen active">
+      <h1>5問でわかる性格診断</h1>
+      <p class="lead">
+        かんたんな質問に答えるだけで、あなたの性格傾向を診断します。
+      </p>
+      <p class="top-description">
+        直感で選んでください。深く考えすぎる必要はありません。
+      </p>
+      <div class="center">
+        <button class="btn" id="startButton">診断をはじめる</button>
+      </div>
+      <footer>Personality Check</footer>
+    </section>
+
+    <section id="questionScreen" class="screen">
+      <div class="header-info">
+        <div id="questionCount" class="question-count"></div>
+        <div id="timer" class="timer">経過時間: 0.000秒</div>
+      </div>
+
+      <div id="progress" class="progress">
+        <div id="progressBar" class="progress-bar"></div>
+      </div>
+
+      <div class="question-box">
+        <h2 id="questionText"></h2>
+        <div id="choices" class="choices"></div>
+      </div>
+    </section>
+
+    <section id="emailScreen" class="screen">
+      <h1>診断が完了しました</h1>
+      <p>
+        あなたの性格タイプを分析しています。<br />
+        診断結果を表示するには、メールアドレスを入力してください。
+      </p>
+
+      <label for="email">メールアドレス</label>
+      <input id="email" type="email" placeholder="example@example.com" />
+
+      <p class="note">
+        ※診断結果の確認用として使用します。
+      </p>
+
+      <div class="center">
+        <button class="btn" id="resultButton">診断結果を見る</button>
+      </div>
+    </section>
+
+    <section id="warningScreen" class="screen">
+      <div class="warning">
+        <h1>⚠ ここで一度、立ち止まってください</h1>
+        <h2>これはセキュリティリテラシーのための演習です</h2>
+
+        <p>
+          あなたは今、診断結果を見るためにメールアドレスを入力しようとしました。
+        </p>
+
+        <p>
+          無料診断、占い、キャンペーン、プレゼント応募などのサイトの中には、
+          メールアドレスなどの個人情報を集めることを目的にしたものがあります。
+        </p>
+
+        <p>
+          今回のページでは、入力内容は保存していません。<br />
+          しかし実際のサイトでは、入力した情報が広告、営業メール、迷惑メール、
+          なりすまし、フィッシングの入口になる可能性があります。
+        </p>
+      </div>
+
+      <div class="fake-result">
+        <h2>あなたの診断結果</h2>
+        <p>
+          <strong>少し油断しやすいタイプ</strong>
+        </p>
+        <p>
+          楽しそうな診断や無料サービスを見ると、つい個人情報を入力してしまう傾向があります。
+          メールアドレスも立派な個人情報です。
+        </p>
+      </div>
+
+      <div class="check-card">
+        <h2>個人情報を入力する前に確認したいこと</h2>
+        <ul class="checklist">
+          <li>運営者が明記されているか</li>
+          <li>なぜメールアドレスが必要なのか</li>
+          <li>プライバシーポリシーがあるか</li>
+          <li>診断結果を見るだけなのに個人情報を求められていないか</li>
+          <li>入力した情報が何に使われるのか</li>
+        </ul>
+      </div>
+
+      <div class="center">
+        <button class="btn btn-secondary" id="restartButton">もう一度見る</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
