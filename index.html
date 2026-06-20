@@ -59,45 +59,22 @@
 
     <section id="warningScreen" class="screen">
       <div class="warning">
-        <h1>⚠ ここで一度、立ち止まってください</h1>
-        <h2>これはセキュリティリテラシーのための演習です</h2>
-
-        <p>
-          あなたは今、診断結果を見るためにメールアドレスを入力しようとしました。
-        </p>
-
-        <p>
-          無料診断、占い、キャンペーン、プレゼント応募などのサイトの中には、
-          メールアドレスなどの個人情報を集めることを目的にしたものがあります。
-        </p>
-
-        <p>
-          今回のページでは、入力内容は保存していません。<br />
-          しかし実際のサイトでは、入力した情報が広告、営業メール、迷惑メール、
-          なりすまし、フィッシングの入口になる可能性があります。
-        </p>
+        <h1 id="warningTitle"></h1>
+        <h2 id="warningSubtitle"></h2>
+        <div id="warningBody"></div>
       </div>
 
       <div class="fake-result">
-        <h2>あなたの診断結果</h2>
+        <h2 id="resultTitle"></h2>
         <p>
-          <strong>少し油断しやすいタイプ</strong>
+          <strong id="resultType"></strong>
         </p>
-        <p>
-          楽しそうな診断や無料サービスを見ると、つい個人情報を入力してしまう傾向があります。
-          メールアドレスも立派な個人情報です。
-        </p>
+        <p id="resultDescription"></p>
       </div>
 
       <div class="check-card">
-        <h2>個人情報を入力する前に確認したいこと</h2>
-        <ul class="checklist">
-          <li>運営者が明記されているか</li>
-          <li>なぜメールアドレスが必要なのか</li>
-          <li>プライバシーポリシーがあるか</li>
-          <li>診断結果を見るだけなのに個人情報を求められていないか</li>
-          <li>入力した情報が何に使われるのか</li>
-        </ul>
+        <h2 id="checklistTitle"></h2>
+        <ul id="checklistItems" class="checklist"></ul>
       </div>
 
       <div class="center">

@@ -1,50 +1,6 @@
-const questions = [
-  {
-    text: "初対面の人が多い場所では、あなたはどうすることが多いですか？",
-    choices: [
-      "自分から話しかけることが多い",
-      "話しかけられれば自然に話す",
-      "まずは周囲の様子を見る",
-      "できれば静かに過ごしたい"
-    ]
-  },
-  {
-    text: "予定を立てるとき、あなたに近いのはどれですか？",
-    choices: [
-      "細かく計画を立てて進めたい",
-      "大まかな流れだけ決めておきたい",
-      "その場の状況に合わせたい",
-      "予定を決めすぎると窮屈に感じる"
-    ]
-  },
-  {
-    text: "新しいことに挑戦するとき、あなたはどう感じやすいですか？",
-    choices: [
-      "楽しみでワクワクする",
-      "不安はあるがやってみたい",
-      "慎重に調べてから判断したい",
-      "できれば慣れたことを続けたい"
-    ]
-  },
-  {
-    text: "人から頼みごとをされたとき、あなたに近い反応はどれですか？",
-    choices: [
-      "できるだけ助けたいと思う",
-      "無理のない範囲で引き受ける",
-      "内容によって慎重に考える",
-      "自分の予定を優先したい"
-    ]
-  },
-  {
-    text: "ミスをしたとき、あなたはどうなりやすいですか？",
-    choices: [
-      "すぐに切り替えて次に進む",
-      "原因を考えて改善しようとする",
-      "しばらく気にしてしまう",
-      "かなり落ち込んでしまう"
-    ]
-  }
-];
+let appData = null;
+let warningData = null;
+let questions = [];
 
 let currentQuestionIndex = 0;
 const answers = [];
@@ -52,21 +8,141 @@ const answers = [];
 let startTime = 0;
 let timerId = null;
 
-const startButton = document.getElementById("startButton");
-const resultButton = document.getElementById("resultButton");
-const restartButton = document.getElementById("restartButton");
+document.addEventListener("DOMContentLoaded", async () => {
+  cacheElements();
+  setupEvents();
 
-const questionCount = document.getElementById("questionCount");
-const questionText = document.getElementById("questionText");
-const choices = document.getElementById("choices");
-const progress = document.getElementById("progress");
-const progressBar = document.getElementById("progressBar");
-const timer = document.getElementById("timer");
-const email = document.getElementById("email");
+  try {
+    const [questionsResponse, warningResponse] = await Promise.all([
+      fetch("json/questions.json"),
+      fetch("json/warning.json")
+    ]);
 
-startButton.addEventListener("click", startDiagnosis);
-resultButton.addEventListener("click", showWarning);
-restartButton.addEventListener("click", restart);
+    if (!questionsResponse.ok) {
+      throw new Error("questions.json の読み込みに失敗しました");
+    }
+
+    if (!warningResponse.ok) {
+      throw new Error("warning.json の読み込みに失敗しました");
+    }
+
+    appData = await questionsResponse.json();
+    warningData = await warningResponse.json();
+    questions = appData.questions || [];
+
+    applyAppText();
+  } catch (error) {
+    console.error(error);
+    alert("診断データの読み込みに失敗しました。GitHub Pages またはローカルサーバー上で開いてください。");
+  }
+});
+
+let startButton;
+let resultButton;
+let restartButton;
+
+let title;
+let lead;
+let topDescription;
+
+let questionCount;
+let questionText;
+let choices;
+let progress;
+let progressBar;
+let timer;
+let email;
+
+function cacheElements() {
+  startButton = document.getElementById("startButton");
+  resultButton = document.getElementById("resultButton");
+  restartButton = document.getElementById("restartButton");
+
+  title = document.querySelector("#topScreen h1");
+  lead = document.querySelector("#topScreen .lead");
+  topDescription = document.querySelector("#topScreen .top-description");
+
+  questionCount = document.getElementById("questionCount");
+  questionText = document.getElementById("questionText");
+  choices = document.getElementById("choices");
+  progress = document.getElementById("progress");
+  progressBar = document.getElementById("progressBar");
+  timer = document.getElementById("timer");
+  email = document.getElementById("email");
+}
+
+function setupEvents() {
+  startButton.addEventListener("click", startDiagnosis);
+  resultButton.addEventListener("click", showWarning);
+  restartButton.addEventListener("click", restart);
+}
+
+function applyAppText() {
+  if (!appData || !appData.app) return;
+
+  title.textContent = appData.app.title;
+  lead.textContent = appData.app.lead;
+  topDescription.textContent = appData.app.description;
+  document.title = appData.app.title;
+}
+
+function renderWarning() {
+  if (!warningData) {
+    alert("警告データの読み込みが完了していません。");
+    return false;
+  }
+
+  const warningTitle = document.getElementById("warningTitle");
+  const warningSubtitle = document.getElementById("warningSubtitle");
+  const warningBody = document.getElementById("warningBody");
+
+  const resultTitle = document.getElementById("resultTitle");
+  const resultType = document.getElementById("resultType");
+  const resultDescription = document.getElementById("resultDescription");
+
+  const checklistTitle = document.getElementById("checklistTitle");
+  const checklistItems = document.getElementById("checklistItems");
+
+  const requiredElements = [
+    warningTitle,
+    warningSubtitle,
+    warningBody,
+    resultTitle,
+    resultType,
+    resultDescription,
+    checklistTitle,
+    checklistItems
+  ];
+
+  if (requiredElements.some((element) => !element)) {
+    console.error("警告画面のHTML要素が見つかりません。id指定を確認してください。");
+    return false;
+  }
+
+  warningTitle.textContent = warningData.warning.title;
+  warningSubtitle.textContent = warningData.warning.subtitle;
+
+  warningBody.innerHTML = "";
+  warningData.warning.paragraphs.forEach((text) => {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = text;
+    warningBody.appendChild(paragraph);
+  });
+
+  resultTitle.textContent = warningData.result.title;
+  resultType.textContent = warningData.result.type;
+  resultDescription.textContent = warningData.result.description;
+
+  checklistTitle.textContent = warningData.checklist.title;
+  checklistItems.innerHTML = "";
+  warningData.checklist.items.forEach((text) => {
+    const item = document.createElement("li");
+    item.textContent = text;
+    checklistItems.appendChild(item);
+  });
+
+  return true;
+}
 
 function showScreen(screenId) {
   document.querySelectorAll(".screen").forEach((screen) => {
@@ -77,6 +153,11 @@ function showScreen(screenId) {
 }
 
 function startDiagnosis() {
+  if (!questions.length) {
+    alert("質問データの読み込みが完了していません。");
+    return;
+  }
+
   currentQuestionIndex = 0;
   answers.length = 0;
 
@@ -155,6 +236,9 @@ function showWarning() {
     alert("診断結果を見るにはメールアドレスの入力が必要です。");
     return;
   }
+
+  const rendered = renderWarning();
+  if (!rendered) return;
 
   showScreen("warningScreen");
 }

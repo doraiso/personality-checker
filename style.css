@@ -182,12 +182,38 @@ input[type="email"] {
   color: #c2410c;
 }
 
+#warningBody {
+  margin-top: 16px;
+}
+
+#warningBody p {
+  margin: 0 0 14px;
+}
+
+#warningBody p:last-child {
+  margin-bottom: 0;
+}
+
 .fake-result {
   margin-top: 20px;
   background: #f8fafc;
   border: 1px dashed #94a3b8;
   border-radius: 16px;
   padding: 18px;
+}
+
+#resultType {
+  display: inline-block;
+  font-size: 1.1rem;
+  color: #1e40af;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 999px;
+  padding: 6px 12px;
+}
+
+#resultDescription {
+  margin-bottom: 0;
 }
 
 .check-card {
@@ -206,6 +232,14 @@ input[type="email"] {
   margin: 0;
   padding-left: 1.2em;
   line-height: 1.9;
+}
+
+#checklistItems li {
+  margin-bottom: 6px;
+}
+
+#checklistItems li:last-child {
+  margin-bottom: 0;
 }
 
 .note {
